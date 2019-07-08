@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/7 | Welcome to Lucas&#39; Blog</title>
+  <title>JavaVm | Welcome to Lucas&#39; Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to Lucas&#39; Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="Java虚拟机知识整理Java内存模型(JMM)参考：深入理解Java内存模型（一）——基础 两个关键问题并发编程中，我们需要处理两个关键问题：  线程之间如何通信  通信是指线程之间以何种机制来交换信息。 在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。   线程之间如何同步  共享内存模型：线程之间通过写-读内存中的公共状态来隐式进行通信。   消息传递模型：线程之间没有公共状态">
+<meta name="keywords" content="Java,虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaVm">
+<meta property="og:url" content="http://yoursite.com/2017/09/08/java-vm/index.html">
 <meta property="og:site_name" content="Welcome to Lucas&#39; Blog">
+<meta property="og:description" content="Java虚拟机知识整理Java内存模型(JMM)参考：深入理解Java内存模型（一）——基础 两个关键问题并发编程中，我们需要处理两个关键问题：  线程之间如何通信  通信是指线程之间以何种机制来交换信息。 在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。   线程之间如何同步  共享内存模型：线程之间通过写-读内存中的公共状态来隐式进行通信。   消息传递模型：线程之间没有公共状态">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/Users/linyinglu/Documents/github/blog/source/_posts/java-vm/jmm.png">
+<meta property="og:updated_time" content="2017-09-08T16:50:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to Lucas&#39; Blog">
+<meta name="twitter:title" content="JavaVm">
+<meta name="twitter:description" content="Java虚拟机知识整理Java内存模型(JMM)参考：深入理解Java内存模型（一）——基础 两个关键问题并发编程中，我们需要处理两个关键问题：  线程之间如何通信  通信是指线程之间以何种机制来交换信息。 在命令式编程中，线程之间的通信机制有两种：共享内存和消息传递。   线程之间如何同步  共享内存模型：线程之间通过写-读内存中的公共状态来隐式进行通信。   消息传递模型：线程之间没有公共状态">
+<meta name="twitter:image" content="http://yoursite.com/Users/linyinglu/Documents/github/blog/source/_posts/java-vm/jmm.png">
   
     <link rel="alternative" href="/atom.xml" title="Welcome to Lucas&#39; Blog" type="application/atom+xml">
   
@@ -150,49 +157,235 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-java-vm" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/08/hello-world/" class="archive-article-date">
-  	<time datetime="2019-07-08T08:30:47.638Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      JavaVm
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/09/08/java-vm/" class="archive-article-date">
+  	<time datetime="2017-09-08T15:00:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Java虚拟机知识整理"><a href="#Java虚拟机知识整理" class="headerlink" title="Java虚拟机知识整理"></a>Java虚拟机知识整理</h1><h2 id="Java内存模型-JMM"><a href="#Java内存模型-JMM" class="headerlink" title="Java内存模型(JMM)"></a>Java内存模型(JMM)</h2><p>参考：<a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="noopener">深入理解Java内存模型（一）——基础</a></p>
+<h3 id="两个关键问题"><a href="#两个关键问题" class="headerlink" title="两个关键问题"></a>两个关键问题</h3><p>并发编程中，我们需要处理两个关键问题：</p>
+<ol>
+<li><p>线程之间如何通信</p>
+<blockquote>
+<p>通信是指线程之间以何种机制来交换信息。</p>
+<p>在命令式编程中，线程之间的通信机制有两种：<u><strong>共享内存</strong></u>和<u><strong>消息传递</strong></u>。</p>
+</blockquote>
+</li>
+<li><p>线程之间如何同步</p>
+<blockquote>
+<p>共享内存模型：线程之间通过写-读内存中的公共状态来隐式进行通信。</p>
+</blockquote>
+<blockquote>
+<p>消息传递模型：线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Java内存模型（JMM）抽象"><a href="#Java内存模型（JMM）抽象" class="headerlink" title="Java内存模型（JMM）抽象"></a>Java内存模型（JMM）抽象</h3><p>Java采用的是<strong><u>共享内存模型</u></strong>，JMM决定一个线程对共享变量的写入何时对另一个线程可见。</p>
+<p>JMM定义了线程和主内存之间的抽象关系：</p>
+<blockquote>
+<p>线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。</p>
+</blockquote>
+<p>Java内存模型的抽象示意图如下：</p>
+<p><img src="/Users/linyinglu/Documents/github/blog/source/_posts/java-vm/jmm.png" alt="jmm"></p>
+<p>从上图来看，线程A与线程B之间如要通信的话，必须要经历下面2个步骤：</p>
+<blockquote>
+<ol>
+<li>首先，线程A把本地内存A中更新过的共享变量刷新到主内存中去。</li>
+<li>然后，线程B到主内存中去读取线程A之前已更新过的共享变量。</li>
+</ol>
+</blockquote>
+<h3 id="happens-before"><a href="#happens-before" class="headerlink" title="happens-before"></a>happens-before</h3><p>从JDK5开始，java使用新的JSR -133内存模型，JSR-133提出了happens-before的概念，通过这个概念来阐述操作之间的内存可见性。</p>
+<blockquote>
+<p>如果一个操作执行的结果需要对另一个操作可见，那么这两个操作之间必须存在happens-before关系。</p>
+<p>这里提到的两个操作既可以是在一个线程之内，也可以是在不同线程之间。</p>
+</blockquote>
+<p>与程序员密切相关的<strong>happens-before</strong>规则如下：</p>
+<ul>
+<li>程序顺序规则：一个线程中的每个操作，happens- before 于该线程中的任意后续操作。</li>
+<li>监视器锁规则：对一个监视器锁的解锁，happens- before 于随后对这个监视器锁的加锁。</li>
+<li>volatile变量规则：对一个volatile域的写，happens- before 于任意后续对这个volatile域的读。</li>
+<li>传递性：如果A happens- before B，且B happens- before C，那么A happens- before C。</li>
+</ul>
+<blockquote>
+<p>注意：两个操作之间具有happens-before关系，并不意味着前一个操作必须要在后一个操作之前执行！happens-before仅仅要求前一个操作（执行的结果）对后一个操作可见，且前一个操作按顺序排在第二个操作之前。</p>
+</blockquote>
+<h2 id="Java虚拟机垃圾回收"><a href="#Java虚拟机垃圾回收" class="headerlink" title="Java虚拟机垃圾回收"></a>Java虚拟机垃圾回收</h2>
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">虚拟机</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Java/" class="article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/09/08/java-vm/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/07/08/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2017/09/02/mac-os-aosp-setup/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Mac配置Android源码编译环境</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
 
 
           </div>
@@ -215,8 +408,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

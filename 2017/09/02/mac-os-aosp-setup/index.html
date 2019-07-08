@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/7 | Welcome to Lucas&#39; Blog</title>
+  <title>Mac配置Android源码编译环境 | Welcome to Lucas&#39; Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Welcome to Lucas&#39; Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="作为Android开发者，必然需要一套Android源码环境用于fucking source code。本文介绍了如何在Mac OS中搭建一套Android源码编译环境。 Android源码编译环境搭建环境准备硬件：Macbook Pro 2016款 操作系统：MacOS Sierra 10.12.6 配置步骤官网指导（需科学上网）：Mac OS Setup 按照以上官方指导一步步做下来，除非标明">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac配置Android源码编译环境">
+<meta property="og:url" content="http://yoursite.com/2017/09/02/mac-os-aosp-setup/index.html">
 <meta property="og:site_name" content="Welcome to Lucas&#39; Blog">
+<meta property="og:description" content="作为Android开发者，必然需要一套Android源码环境用于fucking source code。本文介绍了如何在Mac OS中搭建一套Android源码编译环境。 Android源码编译环境搭建环境准备硬件：Macbook Pro 2016款 操作系统：MacOS Sierra 10.12.6 配置步骤官网指导（需科学上网）：Mac OS Setup 按照以上官方指导一步步做下来，除非标明">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-02T15:38:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Welcome to Lucas&#39; Blog">
+<meta name="twitter:title" content="Mac配置Android源码编译环境">
+<meta name="twitter:description" content="作为Android开发者，必然需要一套Android源码环境用于fucking source code。本文介绍了如何在Mac OS中搭建一套Android源码编译环境。 Android源码编译环境搭建环境准备硬件：Macbook Pro 2016款 操作系统：MacOS Sierra 10.12.6 配置步骤官网指导（需科学上网）：Mac OS Setup 按照以上官方指导一步步做下来，除非标明">
   
     <link rel="alternative" href="/atom.xml" title="Welcome to Lucas&#39; Blog" type="application/atom+xml">
   
@@ -150,49 +155,196 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mac-os-aosp-setup" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/08/hello-world/" class="archive-article-date">
-  	<time datetime="2019-07-08T08:30:47.638Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-08</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/08/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      Mac配置Android源码编译环境
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2017/09/02/mac-os-aosp-setup/" class="archive-article-date">
+  	<time datetime="2017-09-02T08:33:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为Android开发者，必然需要一套Android源码环境用于fucking source code。本文介绍了如何在Mac OS中搭建一套Android源码编译环境。</p>
+<h2 id="Android源码编译环境搭建"><a href="#Android源码编译环境搭建" class="headerlink" title="Android源码编译环境搭建"></a>Android源码编译环境搭建</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>硬件：Macbook Pro 2016款</p>
+<p>操作系统：MacOS Sierra 10.12.6</p>
+<h3 id="配置步骤"><a href="#配置步骤" class="headerlink" title="配置步骤"></a>配置步骤</h3><p>官网指导（需科学上网）：<a href="https://source.android.com/source/initializing#setting-up-a-mac-os-x-build-environment" target="_blank" rel="noopener">Mac OS Setup</a></p>
+<p>按照以上官方指导一步步做下来，除非标明可选，都是必做的。下面只讲述笔者踩过的坑。</p>
+<h3 id="MacPorts的安装"><a href="#MacPorts的安装" class="headerlink" title="MacPorts的安装"></a>MacPorts的安装</h3><p>很多同学可能都会遇到MacPorts安装过程出现卡死的现象，莫慌！可能是因为墙的问题，安装前断开网络连接即可，秒成啊！</p>
+<p>参考链接：<a href="https://my.oschina.net/michael1986/blog/227174" target="_blank" rel="noopener">MacPorts安装卡死</a></p>
+<h3 id="挂载区分大小写的磁盘镜像"><a href="#挂载区分大小写的磁盘镜像" class="headerlink" title="挂载区分大小写的磁盘镜像"></a>挂载区分大小写的磁盘镜像</h3><p>没意外的话，安装官方指导的命令一步步来就行！But，笔者莫名其妙地将苦心下载一晚上的代码给弄丢了，大概是因为MacPorts安装无法停止的缘故，强制关机前没有执行unmountAndroid命令吧，哭！！！</p>
+<h3 id="下载代码"><a href="#下载代码" class="headerlink" title="下载代码"></a>下载代码</h3><p>墙裂推荐使用清华大学开源镜像站的repo下载代码，设置指导：<a href="https://mirrors.tuna.tsinghua.edu.cn/help/git-repo/" target="_blank" rel="noopener">Repo配置</a></p>
+<p>下载代码命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ repo init -u https://aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-8.0.0_r4</span><br><span class="line">$ repo sync -c -j4  <span class="comment"># (清华镜像源最大限制并发线程数为4)</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="编译镜像"><a href="#编译镜像" class="headerlink" title="编译镜像"></a>编译镜像</h3><p>笔者使用的是Nexus 6P。编译步骤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">source</span> build/envsetup.sh</span><br><span class="line">$ lunch aosp_angler-userdebug</span><br><span class="line">$ make -j8 <span class="comment"># 根据自己的机器线程数设定，一般都是线程数*2</span></span><br></pre></td></tr></table></figure>
+
+<p>Android O依然使用Jack编译，编译源码时，可能会遇到Jack OOM，需要修改Jack Server的XMX参数</p>
+<p>参考：<a href="http://www.jianshu.com/p/367f0886e62b" target="_blank" rel="noopener">Jack编译OOM问题解决</a></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/09/02/mac-os-aosp-setup/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2017/09/08/java-vm/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          JavaVm
+        
+      </div>
+    </a>
   
   
-    </div></section>
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
 
 
           </div>
@@ -215,8 +367,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
